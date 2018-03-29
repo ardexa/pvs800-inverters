@@ -38,6 +38,8 @@ PY3K = sys.version_info >= (3, 0)
 
 # Status codes for the PVS800 Inverter
 STATUS_CODES = {"1" : "STANDBY", "2" : "SLEEP", "3" : "START ISU", "4" : "MPPT", "5" : "ISU LOCAL", "6" : "FAULTED", "7" : "Q POWER"}
+FAULT_CODES = {"0" : "No", "1" : "Yes"}
+ALARM_CODES = {"0" : "No", "1" : "Yes"}
 PIDFILE = 'pvs800-ardexa.pid'
 START_REG = "1"
 REGS_TO_READ = "51"
@@ -194,9 +196,13 @@ def read_inverter(ip_address, port, rtu_address, debug):
         count += 1
     if "122" in register_dict:
         fault = register_dict["122"]
+        if fault in FAULT_CODES:
+            fault = FAULT_CODES[fault]
         count += 1
     if "123" in register_dict:
         alarm = register_dict["123"]
+        if alarm in ALARM_CODES:
+            alarm = ALARM_CODES[alarm]
         count += 1
 
     # Total energy is calculated using 3 values as follows
