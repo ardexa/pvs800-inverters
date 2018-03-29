@@ -352,10 +352,8 @@ def discover(config, ip_address, port, bus_addresses):
 
     start_time = time.time()
 
-    # This will check each inverter. If a bad line is received, it will try one more time
     for inverter_addr in ap.parse_address_list(bus_addresses):
         time.sleep(1) # ... wait between reads
-        # First get the inverter parameter data
         header, line, retval = read_inverter(ip_address, port, str(inverter_addr), config.verbosity)
         if retval:
             print("Found inverter at IP Address: ", ip_address, " and RS485 address: ", inverter_addr)
@@ -394,7 +392,6 @@ def get(config, ip_address, bus_addresses, output_directory, port):
 
     start_time = time.time()
 
-    # This will check each inverter. If a bad line is received, it will try one more time
     for inverter_addr in ap.parse_address_list(bus_addresses):
         time.sleep(1) # ... wait between reads
         # First get the inverter parameter data
