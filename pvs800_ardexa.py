@@ -306,10 +306,6 @@ def read_inverter(ip_address, port, rtu_address, debug):
 
     datetime_str = ap.get_datetime_str()
 
-
-    idc_string1 = idc_string2 = idc_string3 = idc_string4 = idc_string5 = idc_string6 = idc_string7 = idc_string8 = ""
-    idc_string9 = idc_string10 = idc_string11 = idc_string12 = idc_string13 = idc_string14 = idc_string15 = idc_string16 = ""
-
     header = "# Datetime, AC Voltage 1 (V), AC Voltage 2 (V), AC Voltage 3 (V), AC Current 1 (A), AC Current 2 (A), AC Current 3 (A), AC Power (W), Grid Frequency (Hz), Power Factor, DC Current (A), DC Power (W), Temperature (C), Status, Alarm, Fault, Energy total (kWh), String Current 1 (A), String Current 2 (A), String Current 3 (A), String Current 4 (A), String Current 5 (A), String Current 6 (A), String Current 7  (A),String Current 8 (A), String Current 9 (A), String Current 10 (A), String Current 11 (A), String Current 12 (A), String Current 13 (A), String Current 14 (A), String Current 15 (A),String Current 16 (A)\n"
 
     output_str = datetime_str + "," +  str(vac1) + "," + str(vac2) + "," + str(vac3) + "," + str(iac1) + "," + str(iac2) + "," \
