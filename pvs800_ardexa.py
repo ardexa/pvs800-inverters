@@ -44,13 +44,14 @@ REGS_TO_READ = "51"
 
 
 
-def write_line(line, inverter_addr, base_directory, header_line, debug):
+def write_line(line, ip_address, inverter_addr, base_directory, header_line, debug):
     """This will write a line to the base_directory
     Assume header and lines are already \n terminated"""
     # Write the log entry, as a date entry in the log directory
     date_str = (time.strftime("%Y-%b-%d"))
     log_filename = date_str + ".csv"
-    log_directory = os.path.join(base_directory, inverter_addr)
+    log_directory = os.path.join(base_directory, ip_address)
+    log_directory = os.path.join(log_directory, inverter_addr)
     ap.write_log(log_directory, log_filename, header_line, line, debug, True, log_directory, "latest.csv")
 
     return True
@@ -397,10 +398,10 @@ def get(config, ip_address, bus_addresses, output_directory, port):
     for inverter_addr in ap.parse_address_list(bus_addresses):
         time.sleep(1) # ... wait between reads
         # First get the inverter parameter data
-        header, line, retval = read_inverter(ip_address, port, inverter_addr, config.verbosity)
+        header, line, retval = read_inverter(ip_address, port, str(inverter_addr), config.verbosity)
         if retval:
             # Write the log entry, as a date entry in the log directory
-            write_line(line, str(inverter_addr), output_directory, header, config.verbosity)
+            write_line(line, ip_address, str(inverter_addr), output_directory, header, config.verbosity)
 
     elapsed_time = time.time() - start_time
     if config.verbosity > 0:
