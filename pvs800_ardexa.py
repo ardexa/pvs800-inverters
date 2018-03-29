@@ -413,5 +413,3 @@ def get(config, ip_address, bus_addresses, output_directory, port):
     # Remove the PID file
     if os.path.isfile(pidfile):
         os.unlink(pidfile)
-
-
