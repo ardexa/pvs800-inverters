@@ -16,7 +16,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='pvs800_ardexa',
-    version='1.1.3',
+    version='1.1.7',
     description='Collect from ABB PVS 800 Inverters and send the data to your cloud using Ardexa',
     long_description=long_description,
     long_description_content_type='text/markdown',

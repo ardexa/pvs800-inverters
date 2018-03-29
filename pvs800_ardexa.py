@@ -40,7 +40,6 @@ PY3K = sys.version_info >= (3, 0)
 STATUS_CODES = {"1" : "STANDBY", "2" : "SLEEP", "3" : "START ISU", "4" : "MPPT", "5" : "ISU LOCAL", "6" : "FAULTED", "7" : "Q POWER"}
 FAULT_CODES = {"0" : "No", "1" : "Yes"}
 ALARM_CODES = {"0" : "No", "1" : "Yes"}
-PIDFILE = 'pvs800-ardexa.pid'
 START_REG = "1"
 REGS_TO_READ = "51"
 
@@ -350,11 +349,6 @@ def cli(config, verbose):
 @CONFIG
 def discover(config, ip_address, port, bus_addresses):
     """Connect to the target IP address and run a scan of 485 addresses"""
-    # Check that no other scripts are running
-    pidfile = os.path.join("/tmp", PIDFILE)
-    if ap.check_pidfile(pidfile, config.verbosity):
-        print("This script is already running")
-        sys.exit(4)
 
     start_time = time.time()
 
@@ -373,10 +367,6 @@ def discover(config, ip_address, port, bus_addresses):
     if config.verbosity > 0:
         print("This request took: ", elapsed_time, " seconds.")
 
-    # Remove the PID file
-    if os.path.isfile(pidfile):
-        os.unlink(pidfile)
-
 
 @cli.command()
 @click.argument('ip_address')
@@ -389,12 +379,6 @@ def get(config, ip_address, bus_addresses, output_directory, port):
     # If the logging directory doesn't exist, create it
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
-
-    # Check that no other scripts are running
-    pidfile = os.path.join(output_directory, PIDFILE)
-    if ap.check_pidfile(pidfile, config.verbosity):
-        print("This script is already running")
-        sys.exit(4)
 
     start_time = time.time()
 
@@ -410,6 +394,4 @@ def get(config, ip_address, bus_addresses, output_directory, port):
     if config.verbosity > 0:
         print("This request took: ", elapsed_time, " seconds.")
 
-    # Remove the PID file
-    if os.path.isfile(pidfile):
-        os.unlink(pidfile)
+
